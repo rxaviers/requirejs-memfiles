@@ -19,7 +19,7 @@
     }
   ],
   "dependencies": {
-    "requirejs": "2.1.x"
+    "requirejs": "2.1.15"
   },
   "devDependencies": {
     "chai": "1.10.x",
