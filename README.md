@@ -43,15 +43,17 @@ requirejs.optimize({
 
 ## API
 
-`requirejs.setFiles( files )`
+- **`requirejs.setFiles( files )`**
 
-- files Object containing (path, data) key-value pairs, e.g.:
+**files** *Object* containing (path, data) key-value pairs, e.g.:
 
-    {
-       <path-of-file-1>: <data-of-file-1>,
-       <path-of-file-2>: <data-of-file-2>,
-       ...
-    }
+```
+{
+   <path-of-file-1>: <data-of-file-1>,
+   <path-of-file-2>: <data-of-file-2>,
+   ...
+}
+```
 
 ## Test
 
