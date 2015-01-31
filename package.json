@@ -1,0 +1,33 @@
+{
+  "name": "requirejs-memfiles",
+  "version": "2.1.15-0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rxaviers/requirejs-memfiles.git"
+  },
+  "readmeFilename": "README.md",
+  "author": {
+    "name": "Rafael Xavier de Souza",
+    "email": "rxaviers@gmail.com",
+    "url": "http://rafael.xavier.blog.br"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/rxaviers/requirejs-memfiles/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "requirejs": "2.1.x"
+  },
+  "devDependencies": {
+    "chai": "1.10.x",
+    "jshint": "2.6.x",
+    "mocha": "2.1.0",
+    "nodeunit": "0.9.x"
+  },
+  "scripts": {
+    "test": "jshint index.js test/*.js && mocha"
+  }
+}
