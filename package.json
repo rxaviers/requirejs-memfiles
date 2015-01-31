@@ -24,8 +24,7 @@
   "devDependencies": {
     "chai": "1.10.x",
     "jshint": "2.6.x",
-    "mocha": "2.1.0",
-    "nodeunit": "0.9.x"
+    "mocha": "2.1.0"
   },
   "scripts": {
     "test": "jshint index.js test/*.js && mocha"
