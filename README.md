@@ -20,30 +20,33 @@ var files = {
   ...
 }
 
-requirejs.setFiles( files );
-requirejs.optimize({
-  appDir: ".",
-  baseUrl: ".",
-  dir: "dist",
-  modules: [{
-      name: "output",
-      include: "main",
-      create: true
-  }]
-}, function() {
-  var output = files[ "dist/output.js" ];
-  ...
+requirejs.setFiles( files, function( done ) {
+  requirejs.optimize({
+    appDir: ".",
+    baseUrl: ".",
+    dir: "dist",
+    modules: [{
+        name: "output",
+        include: "main",
+        create: true
+    }]
+  }, function() {
+    var output = files[ "dist/output.js" ];
+    ...
+    done();
 
-}, function( error ) {
-  // handle error
-  ...
+  }, function( error ) {
+    // handle error
+    ...
+    done();
 
+  });
 });
 ```
 
 ## API
 
-- **`requirejs.setFiles( files )`**
+- **`requirejs.setFiles( files, callback )`**
 
 **files** *Object* containing (path, data) key-value pairs, e.g.:
 
@@ -54,6 +57,9 @@ requirejs.optimize({
    ...
 }
 ```
+
+- **callback** *Function* called with one argument: a callback function that
+must be called when use is complete.
 
 ## Test
 
