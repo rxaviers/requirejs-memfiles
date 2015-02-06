@@ -1,4 +1,4 @@
-var fileApi, files, prim,
+var fileApi, files, mutexLock, prim, queue,
 	path = require( "path" ),
 	requirejs = require( "requirejs" );
 
@@ -116,8 +116,50 @@ fileApi = {
 	}
 };
 
+queue = [];
+
+function enqueue() {
+	queue.push( arguments );
+	if ( queue.length === 1 ) {
+		run();
+	}
+}
+
+function dequeue() {
+	queue.shift();
+	run();
+}
+
+function run() {
+	var args = queue[ 0 ];
+	if ( args !== undefined ) {
+		setFiles.apply( {}, args );
+	}
+}
+
+function setFiles( _files, callback ) {
+
+	if ( mutexLock ) {
+		return callback( new Error( "Internal bug: concurrent calls not supported" ) );
+	}
+	mutexLock = true;
+
+	requirejs.define( "node/file", [ "prim" ], function( _prim ) {
+		prim = _prim;
+		return fileApi;
+	});
+
+	files = _files;
+	callback(function() {
+		files = {};
+		mutexLock = false;
+		dequeue();
+	});
+
+}
+
 /**
- * requirejs.setFiles( files )
+ * requirejs.setFiles( files, callback )
  *
  * @files [Object] containing (path, data) key-value pairs, e.g.:
  * {
@@ -126,15 +168,26 @@ fileApi = {
  *    ...
  * }
  *
+ * @callback [Function] called with one argument: a callback function that must be called when
+ * use is complete.
+ *
+ * Example:
+ * ```javascript
+ * requirejs.setFiles( files, function( done ) {
+ *   requirejs.optmize( config, function() {
+ *     doSomething();
+ *     done();
+ *   }, function( error ) {
+ *     doSomething( error );
+ *     done();
+ *   });
+ * });
+ *
+ * ```
+ *
  */
-requirejs.setFiles = function( _files ) {
-
-	requirejs.define( "node/file", [ "prim" ], function( _prim ) {
-		prim = _prim;
-		return fileApi;
-	});
-
-	files = _files;
+requirejs.setFiles = function( files, callback ) {
+	enqueue( files, callback );
 };
 
 module.exports = requirejs;
