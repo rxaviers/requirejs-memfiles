@@ -1,6 +1,6 @@
 {
   "name": "requirejs-memfiles",
-  "version": "2.1.15-1",
+  "version": "2.1.15-2",
   "main": "index.js",
   "repository": {
     "type": "git",
